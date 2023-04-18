@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import './Aot.css';
+import "../styles/Aot.css";
+
+/**
+ * Tester countdown for app
+ * @returns countdown
+ */
 const Aot = () => {
     let year = new Date().getFullYear();
     /**
