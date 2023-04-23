@@ -26,7 +26,7 @@ app.post("/signup", async (req, res) => {
     if (user){
         res.status(500);
         res.json({
-            message: "username already exists",
+            message: "Username already exists",
         });
         return;
     }

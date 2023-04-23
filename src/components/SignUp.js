@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { currentCredentials } from "../App";
+
 
 const handleErrors = async (response) => {
     if (!response.ok){
@@ -9,10 +12,11 @@ const handleErrors = async (response) => {
 }
 
 export default function SignUp(){
-
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [, setCredentials] = useContext(currentCredentials);
+
 
     const signUp = (e) => {
         e.preventDefault();
@@ -26,16 +30,25 @@ export default function SignUp(){
                 password,
             })
         })
-        .then(handleErrors)
-        .then(() => {})
-        .catch((error) => {
-            setError(error.message);
-        })
-    }
+            .then(handleErrors)
+            .then(() => {
+                setCredentials({
+                    username,
+                    password,
+                });
+                navigate("/");
+            })
+            .catch((error) => {
+                setError(error.message);
+            });
+    };
+
+    const navigate = useNavigate();
+
     return(
         <div>
             SignUp Page!
-            {error}
+            {error && <span style={{color : 'purple'}}>{error}</span>}
             <form onSubmit={signUp}>
                 <input onChange={(e) => setUsername(e.target.value)}
                     placeholder="username"/>
