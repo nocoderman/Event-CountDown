@@ -1,7 +1,9 @@
 import './styles/App.css';
+import "react-datepicker/dist/react-datepicker.css";
 import Aot from "./components/Aot";
 import SignUp from "./components/SignUp";
 import HomePage from "./components/HomePage";
+import Login from "./components/Login";
 import React, { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -12,7 +14,13 @@ import {
 export const currentCredentials = React.createContext();
 
 function App() {
-  const credentialState = useState('');
+  // const credentialState = useState('');
+  const credentialState = useState({
+    username: "robert",
+    password: "123"
+  });
+  //^^temp(remove after changes)
+
   
   return (
     <div className="App">
@@ -21,6 +29,7 @@ function App() {
           <Routes>
             <Route exact path="/" element={<HomePage/>}/>
             <Route exact path="/signup" element={<SignUp/>}/>
+            <Route exact path="/login" element={<Login/>}/>
           </Routes>
         </Router>
       </currentCredentials.Provider>

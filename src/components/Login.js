@@ -1,22 +1,29 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { currentCredentials } from "../App";
-import { handleErrors } from "./Login";
+
+export const handleErrors = async (response) => {
+    if (!response.ok){
+        const { message } = await response.json();
+        throw Error(message);
+    }
+    return response.json();
+};
 
 /**
- * Sign up/Registration Page
- * @returns route -> signup
+ * Login Page
+ * @returns route -> Login
  */
-export default function SignUp(){
+export default function Login(){
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [, setCredentials] = useContext(currentCredentials);
 
 
-    const signUp = (e) => {
+    const login = (e) => {
         e.preventDefault();
-        fetch('http://localhost:4000/signup', {
+        fetch('http://localhost:4000/login', {
             method: 'POST',
             headers: {
                 "Content-Type": "application/json",
@@ -43,9 +50,9 @@ export default function SignUp(){
 
     return(
         <div>
-            SignUp Page!
+            <h1>Login</h1>
             {error && <span style={{color : 'purple'}}>{error}</span>}
-            <form onSubmit={signUp}>
+            <form onSubmit={login}>
                 <input onChange={(e) => setUsername(e.target.value)}
                     placeholder="username"/>
                 <br/>
@@ -54,7 +61,7 @@ export default function SignUp(){
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="password"/>
                 <br/>
-                <button type="submit"> Sign Up</button>
+                <button type="submit">Login</button>
             </form>
         </div>
     );
